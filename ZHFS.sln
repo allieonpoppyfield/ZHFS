@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZHFS", "ZHFS.csproj", "{820C8F7B-E95F-4153-8B59-CA3EC122B880}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{820C8F7B-E95F-4153-8B59-CA3EC122B880}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{820C8F7B-E95F-4153-8B59-CA3EC122B880}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{820C8F7B-E95F-4153-8B59-CA3EC122B880}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{820C8F7B-E95F-4153-8B59-CA3EC122B880}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1832B530-8F42-4BB7-A4E8-22A56E0C413E}
+	EndGlobalSection
+EndGlobal
