@@ -1,15 +1,7 @@
-using ZHFS.Database;
-using System;
-using System.Windows.Forms;
-using System.Data;
-using DevExpress.XtraGrid.Views.Base;
 //<icbNewItemRow>
-using DevExpress.XtraGrid.Views.Grid;
 //</icbNewItemRow>
-using DevExpress.XtraEditors.Controls;
-using DevExpress.XtraEditors;
-using DevExpress.Utils;
 using DevExpress.XtraPivotGrid;
+using ZHFS.Database;
 
 namespace ZHFS
 {
@@ -26,18 +18,33 @@ namespace ZHFS
         private async Task Init()
         {
             using var context = new AppDbContext();
-            pivotGridControl1.DataSource = context.Users!.ToList();
 
-            PivotGridField fieldCategoryName = new PivotGridField()
+            await pivotGridControl1.SetFieldSortingAsync(null, PivotSortOrder.Ascending);
+
+            PivotGridField name = new PivotGridField()
             {
                 Area = PivotArea.RowArea,
-                AreaIndex = 10,
-                Caption = "Name"
+                Caption = "Имя UJD^YJ FMFRF",
+                FieldName = "name",
             };
-            DataSourceColumnBinding categoryNameBinding = new DataSourceColumnBinding("Name");
-            fieldCategoryName.DataBinding = categoryNameBinding;
-            pivotGridControl1.Fields.Add(fieldCategoryName);
+            PivotGridField surname = new PivotGridField()
+            {
+                Area = PivotArea.RowArea,
+                Caption = "Фамилия",
+                SortOrder = PivotSortOrder.Ascending,
+            };
+            PivotGridField phoneNumber = new PivotGridField()
+            {
+                Area = PivotArea.RowArea,
+                Caption = "Номер телефона"
+            };
 
+
+            pivotGridControl1.Fields.Add(name);
+            pivotGridControl1.Fields.Add(surname);
+            pivotGridControl1.Fields.Add(phoneNumber);
+            pivotGridControl1.DataSource = context.Users!.ToList();
         }
     }
 }
+
