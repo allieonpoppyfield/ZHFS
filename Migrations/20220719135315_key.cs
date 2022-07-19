@@ -4,7 +4,7 @@
 
 namespace ZHFS.Migrations
 {
-    public partial class watafuck : Migration
+    public partial class key : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
