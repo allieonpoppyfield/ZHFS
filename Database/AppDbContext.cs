@@ -14,7 +14,8 @@ public class AppDbContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         base.OnConfiguring(optionsBuilder);
-        optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-BPD4NLJ\SQLEXPRESS;Database=ZFSDB;Trusted_Connection=True;"); 
+        //optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-BPD4NLJ\SQLEXPRESS;Database=ZFSDB;Trusted_Connection=True;"); 
+        optionsBuilder.UseSqlServer(@"Server=localhost\SQLEXPRESS;Database=ZFSDB;Trusted_Connection=True;"); 
     }
     public DbSet<User>? Users { get; set; }
     public DbSet<Product>? Products { get; set; }

@@ -7,5 +7,6 @@ public class Sale
 
     public User? User { get; set; }
     public Product? Product { get; set; }
+    public int Count { get; set; }
     public DateTime CreatedDt { get; set; }
 }

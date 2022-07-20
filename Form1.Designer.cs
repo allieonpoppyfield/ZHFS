@@ -34,14 +34,18 @@
             this.clientGrid = new DevExpress.XtraGrid.GridControl();
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
-            this.simpleButton3 = new DevExpress.XtraEditors.SimpleButton();
+            this.simpleButton4 = new DevExpress.XtraEditors.SimpleButton();
             this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
             this.xtraTabPage2 = new DevExpress.XtraTab.XtraTabPage();
             this.panelControl2 = new DevExpress.XtraEditors.PanelControl();
             this.simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
             this.productsGrid = new DevExpress.XtraGrid.GridControl();
             this.gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.simpleButton4 = new DevExpress.XtraEditors.SimpleButton();
+            this.xtraTabPage3 = new DevExpress.XtraTab.XtraTabPage();
+            this.sellsGrid = new DevExpress.XtraGrid.GridControl();
+            this.gridView3 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.panelControl3 = new DevExpress.XtraEditors.PanelControl();
+            this.simpleButton5 = new DevExpress.XtraEditors.SimpleButton();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
             this.xtraTabControl1.SuspendLayout();
@@ -55,6 +59,11 @@
             this.panelControl2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.productsGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView2)).BeginInit();
+            this.xtraTabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.sellsGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.panelControl3)).BeginInit();
+            this.panelControl3.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -76,7 +85,8 @@
             this.xtraTabControl1.TabIndex = 2;
             this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.xtraTabPage1,
-            this.xtraTabPage2});
+            this.xtraTabPage2,
+            this.xtraTabPage3});
             // 
             // xtraTabPage1
             // 
@@ -105,7 +115,6 @@
             // panelControl1
             // 
             this.panelControl1.Controls.Add(this.simpleButton4);
-            this.panelControl1.Controls.Add(this.simpleButton3);
             this.panelControl1.Controls.Add(this.simpleButton1);
             this.panelControl1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelControl1.Location = new System.Drawing.Point(0, 0);
@@ -113,14 +122,14 @@
             this.panelControl1.Size = new System.Drawing.Size(798, 35);
             this.panelControl1.TabIndex = 3;
             // 
-            // simpleButton3
+            // simpleButton4
             // 
-            this.simpleButton3.Location = new System.Drawing.Point(135, 7);
-            this.simpleButton3.Name = "simpleButton3";
-            this.simpleButton3.Size = new System.Drawing.Size(120, 23);
-            this.simpleButton3.TabIndex = 1;
-            this.simpleButton3.Text = "Создать продажу";
-            this.simpleButton3.Click += new System.EventHandler(this.simpleButton3_Click);
+            this.simpleButton4.Location = new System.Drawing.Point(135, 6);
+            this.simpleButton4.Name = "simpleButton4";
+            this.simpleButton4.Size = new System.Drawing.Size(155, 23);
+            this.simpleButton4.TabIndex = 2;
+            this.simpleButton4.Text = "Сводная таблица продаж ";
+            this.simpleButton4.Click += new System.EventHandler(this.simpleButton4_Click);
             // 
             // simpleButton1
             // 
@@ -129,6 +138,7 @@
             this.simpleButton1.Size = new System.Drawing.Size(120, 23);
             this.simpleButton1.TabIndex = 0;
             this.simpleButton1.Text = "Добавить клиента";
+            this.simpleButton1.Click += new System.EventHandler(this.simpleButton1_Click);
             // 
             // xtraTabPage2
             // 
@@ -136,7 +146,7 @@
             this.xtraTabPage2.Controls.Add(this.productsGrid);
             this.xtraTabPage2.Name = "xtraTabPage2";
             this.xtraTabPage2.Size = new System.Drawing.Size(798, 425);
-            this.xtraTabPage2.Text = "Продукты";
+            this.xtraTabPage2.Text = "Товары";
             // 
             // panelControl2
             // 
@@ -172,14 +182,47 @@
             this.gridView2.GridControl = this.productsGrid;
             this.gridView2.Name = "gridView2";
             // 
-            // simpleButton4
+            // xtraTabPage3
             // 
-            this.simpleButton4.Location = new System.Drawing.Point(261, 6);
-            this.simpleButton4.Name = "simpleButton4";
-            this.simpleButton4.Size = new System.Drawing.Size(120, 23);
-            this.simpleButton4.TabIndex = 2;
-            this.simpleButton4.Text = "Сводная таблица";
-            this.simpleButton4.Click += new System.EventHandler(this.simpleButton4_Click);
+            this.xtraTabPage3.Controls.Add(this.sellsGrid);
+            this.xtraTabPage3.Controls.Add(this.panelControl3);
+            this.xtraTabPage3.Name = "xtraTabPage3";
+            this.xtraTabPage3.Size = new System.Drawing.Size(798, 425);
+            this.xtraTabPage3.Text = "Продажи";
+            // 
+            // sellsGrid
+            // 
+            this.sellsGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.sellsGrid.Location = new System.Drawing.Point(0, 35);
+            this.sellsGrid.MainView = this.gridView3;
+            this.sellsGrid.Name = "sellsGrid";
+            this.sellsGrid.Size = new System.Drawing.Size(798, 390);
+            this.sellsGrid.TabIndex = 6;
+            this.sellsGrid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gridView3});
+            // 
+            // gridView3
+            // 
+            this.gridView3.GridControl = this.sellsGrid;
+            this.gridView3.Name = "gridView3";
+            // 
+            // panelControl3
+            // 
+            this.panelControl3.Controls.Add(this.simpleButton5);
+            this.panelControl3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelControl3.Location = new System.Drawing.Point(0, 0);
+            this.panelControl3.Name = "panelControl3";
+            this.panelControl3.Size = new System.Drawing.Size(798, 35);
+            this.panelControl3.TabIndex = 5;
+            // 
+            // simpleButton5
+            // 
+            this.simpleButton5.Location = new System.Drawing.Point(9, 7);
+            this.simpleButton5.Name = "simpleButton5";
+            this.simpleButton5.Size = new System.Drawing.Size(120, 23);
+            this.simpleButton5.TabIndex = 0;
+            this.simpleButton5.Text = "Добавить продажу";
+            this.simpleButton5.Click += new System.EventHandler(this.simpleButton5_Click);
             // 
             // Form1
             // 
@@ -202,6 +245,11 @@
             this.panelControl2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.productsGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView2)).EndInit();
+            this.xtraTabPage3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.sellsGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.panelControl3)).EndInit();
+            this.panelControl3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -220,7 +268,11 @@
         private DevExpress.XtraGrid.Views.Grid.GridView gridView2;
         private DevExpress.XtraEditors.PanelControl panelControl2;
         private DevExpress.XtraEditors.SimpleButton simpleButton2;
-        private DevExpress.XtraEditors.SimpleButton simpleButton3;
         private DevExpress.XtraEditors.SimpleButton simpleButton4;
+        private DevExpress.XtraTab.XtraTabPage xtraTabPage3;
+        private DevExpress.XtraEditors.PanelControl panelControl3;
+        private DevExpress.XtraEditors.SimpleButton simpleButton5;
+        private DevExpress.XtraGrid.GridControl sellsGrid;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridView3;
     }
 }
