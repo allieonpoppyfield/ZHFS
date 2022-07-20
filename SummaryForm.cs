@@ -44,7 +44,7 @@ namespace ZHFS
             PivotGridField fieldSales = new PivotGridField()
             {
                 Area = PivotArea.DataArea,
-                AreaIndex = 1,
+                AreaIndex = 2,
                 Caption = "Сумма",
                 FieldName = "TotalSale"
             };
@@ -57,8 +57,8 @@ namespace ZHFS
 
             PivotGridField fieldaijdi = new PivotGridField()
             {
-                Area = PivotArea.DataArea,
-                AreaIndex = 2,
+                Area = PivotArea.RowArea,
+                AreaIndex = 1,
                 Caption = "Продукт",
                 FieldName = "ProductName"
             };
@@ -82,7 +82,7 @@ namespace ZHFS
             }
 
             using var context = new AppDbContext();
-            pivotGridControl1.DataSource = null;
+            pivotGridControl1.DataSource = context.Users.Select(x => x.Name);
         }
     }
 }
