@@ -32,8 +32,10 @@ namespace ZHFS
         private async Task InitGrid()
         {
             using var context = new AppDbContext();
-            var list = context.SaleItems.Include(x => x.Product).Include(x => x.Sale).ThenInclude(x => x.User).
-                Select(x => new { UserName = x.Sale.User.Name, ProductName = x.Product.Name, TotalPrice = x.Product.Price * x.Count });
+            var list = await context.SaleItems.Include(x => x.Product).Include(x => x.Sale).ThenInclude(x => x.User).
+                Select(x => new { UserName = x.Sale.User.Name, ProductName = x.Product.Name, TotalPrice = x.Product.Price * x.Count })
+                .GroupBy(x => new { x.UserName, x.ProductName })
+                .ToListAsync();
         }
 
         private void closeBtn_Click(object sender, EventArgs e)
