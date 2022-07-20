@@ -6,7 +6,7 @@ public class Sale
     //public int ProductId { get; set; }
 
     public User? User { get; set; }
-    public Product? Product { get; set; }
-    public int Count { get; set; }
+    //public Product? Product { get; set; }
+    public List<SaleItem> SaleItems { get; set; }
     public DateTime CreatedDt { get; set; }
 }

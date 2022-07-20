@@ -80,7 +80,7 @@ namespace ZHFS
                     }
                 };
                 e.Menu.Items.Add(editUSerItem);
-
+                
                 DXMenuItem addSaleItem = new DXMenuItem("Добавить продажу для клиента");
                 addSaleItem.Click += async (o, args) =>
                 {
@@ -105,8 +105,9 @@ namespace ZHFS
         private async Task<dynamic> GetUsersDataSource()
         {
             using var context = new AppDbContext();
-            var list = await context.Users.Include(x => x.Sales).ThenInclude(x => x.Product).ToListAsync();
-            return list.Select(x => new { x.Id, x.Name, x.Surname, x.PhoneNumber, SellPrice = x.Sales?.Sum(a => a.Product?.Price) }); ;
+            var list = await context.Users.Include(x => x.Sales).ThenInclude(x => x.SaleItems).ThenInclude(x => x.Product).ToListAsync();
+            var r = list.Select(x => new { x.Id, x.Name, x.Surname, x.PhoneNumber, SellPrice = x.Sales.Sum(x => x.SaleItems.Sum(x => x.Product.Price * x.Count)) });
+            return r;
         }
 
         private async Task<dynamic> GetProductsDataSource()
@@ -117,8 +118,10 @@ namespace ZHFS
         private async Task<dynamic> GetSellsDataSource()
         {
             using var context = new AppDbContext();
-            return await context.Sales.Include(x => x.User).Include(x => x.Product)
-                .Select(x => new { UserName = x.User.Name, ProductName = x.Product.Name, Price = x.Product.Price, Count = x.Count, TotalPrice = x.Count * x.Product.Price }).ToListAsync();
+            var list = await context.SaleItems.Include(x => x.Product)
+                .Include(x => x.Sale).ThenInclude(x => x.User)
+                .Select(x => new { UserName = x.Sale.User.Name, ProductName = x.Product.Name, Price = x.Product.Price, Count = x.Count, TotalPrice = x.Count * x.Product.Price }).ToListAsync();
+            return list;
         }
 
         private async void simpleButton2_Click(object sender, EventArgs e)
@@ -132,15 +135,6 @@ namespace ZHFS
         {
             var frm = new SummaryForm();
             frm.Show(this);
-        }
-
-        private async void simpleButton5_Click(object sender, EventArgs e)
-        {
-            var frm = new SellForm();
-            if (frm.ShowDialog() == DialogResult.OK)
-            {
-                clientGrid.DataSource = await GetUsersDataSource();
-            }
         }
     }
 }
