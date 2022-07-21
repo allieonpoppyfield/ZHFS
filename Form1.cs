@@ -24,14 +24,14 @@ public partial class Form1 : Form
     {
         clientGrid.DataSource = await GetUsersDataSource();
         clientGrid.ToolTipController = new();
-        GridView? gridView1 = clientGrid.MainView as GridView;
-        gridView1.OptionsBehavior.Editable = false;
-        gridView1!.PopupMenuShowing += GridView1_PopupMenuShowing;
-        GridColumn nameCol = gridView1!.Columns["Name"];
-        GridColumn idCol = gridView1!.Columns["Id"];
-        GridColumn surnameCol = gridView1!.Columns["Surname"];
-        GridColumn phoneNumberCol = gridView1!.Columns["PhoneNumber"];
-        GridColumn sellPriceCol = gridView1!.Columns["SellPrice"];
+        GridView? clientGridView = clientGrid.MainView as GridView;
+        clientGridView.OptionsBehavior.Editable = false;
+        clientGridView!.PopupMenuShowing += GridView1_PopupMenuShowing;
+        GridColumn nameCol = clientGridView!.Columns["Name"];
+        GridColumn idCol = clientGridView!.Columns["Id"];
+        GridColumn surnameCol = clientGridView!.Columns["Surname"];
+        GridColumn phoneNumberCol = clientGridView!.Columns["PhoneNumber"];
+        GridColumn sellPriceCol = clientGridView!.Columns["SellPrice"];
         nameCol.Caption = "Имя";
         surnameCol.Caption = "Фамилия";
         phoneNumberCol.Caption = "Номер телефона";
@@ -42,13 +42,33 @@ public partial class Form1 : Form
     private async Task InitProductList()
     {
         productsGrid.DataSource = await GetProductsDataSource();
-        GridView? gridView1 = productsGrid.MainView as GridView;
-        gridView1.OptionsBehavior.Editable = false;
-        GridColumn nameCol = gridView1!.Columns["Name"];
+        GridView? productsGridView = productsGrid.MainView as GridView;
+        productsGridView.OptionsBehavior.Editable = false;
+        GridColumn nameCol = productsGridView!.Columns["Name"];
         nameCol.Caption = "Наименование";
-        GridColumn priceCol = gridView1.Columns["Price"];
+        GridColumn priceCol = productsGridView.Columns["Price"];
         priceCol.Caption = "Цена";
-        gridView1.Columns["Id"].Visible = false; ;
+        productsGridView.Columns["Id"].Visible = false;
+        productsGridView.PopupMenuShowing += ProductsGridPopupMenuShowing;
+    }
+
+    private void ProductsGridPopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
+    {
+        DXMenuItem editProductItem = new DXMenuItem("Редактирование информации о товаре");
+        editProductItem.Click += async (o, args) =>
+        {
+            var s = (GridView)sender;
+            var id = (int)s.GetFocusedRowCellValue("Id");
+            using var context = new AppDbContext();
+            Product product = await context.Products!.FirstOrDefaultAsync(x => x.Id == id);
+            if (product != null)
+            {
+                ProductForm form = new(product);
+                if (form.ShowDialog() == DialogResult.OK)
+                    productsGrid.DataSource = await GetProductsDataSource();
+            }
+        };
+        e.Menu.Items.Add(editProductItem);
     }
 
     private async Task InitSaleList()

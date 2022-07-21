@@ -39,19 +39,22 @@ namespace ZHFS
         {
             avalaibleProductsGrid.DataSource = await GetAvalaibleProductsDataSource();
 
-            GridView? gridView1 = avalaibleProductsGrid.MainView as GridView;
-            gridView1.OptionsView.ShowGroupPanel = false;
-            gridView1.OptionsBehavior.Editable = false;
-            gridView1.Columns["Id"].Visible = false;
-            gridView1.Columns["Name"].Caption = "Наименование товара";
-            gridView1.Columns["Price"].Caption = "Цена";
-            gridView1.PopupMenuShowing += GridView1_PopupMenuShowing;
+            GridView? avalaibleProductsGridView = avalaibleProductsGrid.MainView as GridView;
+            avalaibleProductsGridView.OptionsView.ShowGroupPanel = false;
+            avalaibleProductsGridView.OptionsBehavior.Editable = false;
+            avalaibleProductsGridView.Columns["Id"].Visible = false;
+            avalaibleProductsGridView.Columns["Name"].Caption = "Наименование товара";
+            avalaibleProductsGridView.Columns["Price"].Caption = "Цена";
+            avalaibleProductsGridView.PopupMenuShowing += GridView1_PopupMenuShowing;
         }
 
         private async Task InitCurrentProducts()
         {
             currentProductsGrid.DataSource = this.currentProducts;
             var currentProductGridView = currentProductsGrid.MainView as GridView;
+            currentProductGridView.Columns["productId"].Visible = false;
+            currentProductGridView.Columns["count"].Caption = "Количество";
+            currentProductGridView.Columns["name"].Caption = "Наименование товара";
             currentProductGridView.OptionsView.ShowGroupPanel = currentProductGridView.OptionsBehavior.Editable = false;
             currentProductGridView.PopupMenuShowing += CurrentProductsGridViewPopupMenuShowing; ;
         }

@@ -23,6 +23,8 @@ namespace ZHFS
         public ProductForm(Product product) : this()
         {
             this.product = product;
+            nameTb.Text = product.Name;
+            priceTb.Text = product.Price.ToString();
         }
 
         private void CloseBtnClick(object sender, EventArgs e)
@@ -32,6 +34,12 @@ namespace ZHFS
 
         private void SaveBtnClick(object sender, EventArgs e)
         {
+            if (new string[] { nameTb.Text, priceTb.Text }.FirstOrDefault(x => string.IsNullOrWhiteSpace(x)) != null)
+            {
+                MessageBox.Show("Заполните все данные!");
+                return;
+            }
+
             using var context = new AppDbContext();
             product.Name = nameTb.Text;
             product.Price = Convert.ToDecimal(priceTb.Text);
