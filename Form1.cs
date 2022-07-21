@@ -1,4 +1,5 @@
 using DevExpress.Utils.Menu;
+using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Grid;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,7 @@ public partial class Form1 : Form
         clientGrid.DataSource = await GetUsersDataSource();
         clientGrid.ToolTipController = new();
         GridView? gridView1 = clientGrid.MainView as GridView;
+        gridView1.OptionsBehavior.Editable = false;
         gridView1!.PopupMenuShowing += GridView1_PopupMenuShowing;
         GridColumn nameCol = gridView1!.Columns["Name"];
         GridColumn idCol = gridView1!.Columns["Id"];
@@ -41,6 +43,7 @@ public partial class Form1 : Form
     {
         productsGrid.DataSource = await GetProductsDataSource();
         GridView? gridView1 = productsGrid.MainView as GridView;
+        gridView1.OptionsBehavior.Editable = false;
         GridColumn nameCol = gridView1!.Columns["Name"];
         nameCol.Caption = "Наименование";
         GridColumn priceCol = gridView1.Columns["Price"];
@@ -52,11 +55,13 @@ public partial class Form1 : Form
     {
         sellsGrid.DataSource = await GetSellsDataSource();
         GridView? salesGridView = sellsGrid.MainView as GridView;
+        salesGridView.OptionsBehavior.Editable = false;
         salesGridView.Columns["UserName"].Caption = "Клиент";
         salesGridView.Columns["ProductName"].Caption = "Товар";
         salesGridView.Columns["Price"].Caption = "Цена товара";
         salesGridView.Columns["Count"].Caption = "Количество";
         salesGridView.Columns["TotalPrice"].Caption = "Сумма";
+        salesGridView.Columns["CreatedDt"].Caption = "Дата продажи";
     }
 
     private void GridView1_PopupMenuShowing(object sender, DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventArgs e)
@@ -79,6 +84,29 @@ public partial class Form1 : Form
             };
             e.Menu.Items.Add(editUSerItem);
 
+            DXMenuItem deleteUSerItem = new DXMenuItem("Удалить клиента");
+            deleteUSerItem.Click += async (o, args) =>
+            {
+                if (XtraMessageBox.Show("Действительно удалить данного клиента? Будет также удалена вся статистика продаж по клиенту."
+                    , "Подтверждение удаления", MessageBoxButtons.YesNo) == DialogResult.No)
+                    return;
+
+                var s = (GridView)sender;
+                var id = (long)s.GetFocusedRowCellValue("Id");
+                using var context = new AppDbContext();
+                User user = await context.Users!.FirstOrDefaultAsync(x => x.Id == id);
+                List<Sale> sales = await context.Sales.Where(x => x.User.Id == user.Id).ToListAsync();
+                List<SaleItem> saleItems = await context.SaleItems.Where(x => sales.Select(x => x.Id).Contains(x.Sale.Id)).ToListAsync();
+                context.SaleItems.RemoveRange(saleItems);
+                context.Sales.RemoveRange(sales);
+                context.Users.Remove(user);
+                await context.SaveChangesAsync();
+                clientGrid.DataSource = await GetUsersDataSource();
+                sellsGrid.DataSource = await GetSellsDataSource();
+            };
+            e.Menu.Items.Add(deleteUSerItem);
+
+
             DXMenuItem addSaleItem = new DXMenuItem("Добавить продажу для клиента");
             addSaleItem.Click += async (o, args) =>
             {
@@ -89,6 +117,20 @@ public partial class Form1 : Form
                     sellsGrid.DataSource = await GetSellsDataSource();
             };
             e.Menu.Items.Add(addSaleItem);
+
+            DXMenuItem createReportItem = new DXMenuItem("Сформировать отчет о проданных товарах по клиенту");
+            createReportItem.Click += (o, args) =>
+            {
+                var datePeriodForm = new DatePeriodForm();
+                if (datePeriodForm.ShowDialog() == DialogResult.OK)
+                {
+                    var s = (GridView)sender;
+                    var id = (long)s.GetFocusedRowCellValue("Id");
+                    var frm = new ClientReportForm(id, datePeriodForm.DateFrom, datePeriodForm.DateTo);
+                    frm.Show(this);
+                }
+            };
+            e.Menu.Items.Add(createReportItem);
         }
     }
     private async void simpleButton1_Click(object sender, EventArgs e)
@@ -118,7 +160,7 @@ public partial class Form1 : Form
         using var context = new AppDbContext();
         var list = await context.SaleItems.Include(x => x.Product)
             .Include(x => x.Sale).ThenInclude(x => x.User)
-            .Select(x => new { UserName = x.Sale.User.Name, ProductName = x.Product.Name, Price = x.Product.Price, Count = x.Count, TotalPrice = x.Count * x.Product.Price }).ToListAsync();
+            .Select(x => new { UserName = x.Sale.User.Name, ProductName = x.Product.Name, x.Sale.CreatedDt, Price = x.Product.Price, Count = x.Count, TotalPrice = x.Count * x.Product.Price }).ToListAsync();
         return list;
     }
 
@@ -131,8 +173,12 @@ public partial class Form1 : Form
 
     private void simpleButton4_Click(object sender, EventArgs e)
     {
-        var frm = new SummaryForm();
-        frm.Show(this);
+        var datePeriodForm = new DatePeriodForm();
+        if (datePeriodForm.ShowDialog() == DialogResult.OK)
+        {
+            var frm = new SummaryForm(datePeriodForm.DateFrom, datePeriodForm.DateTo);
+            frm.Show(this);
+        }
     }
 }
 

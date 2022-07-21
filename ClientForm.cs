@@ -1,14 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using ZHFS.Database;
+﻿using ZHFS.Database;
 
 namespace ZHFS
 {
@@ -36,6 +26,12 @@ namespace ZHFS
         private void SaveBtnClick(object sender, EventArgs e)
         {
             using var context = new AppDbContext();
+
+            if (new string[] { nameTb.Text, surnameTb.Text, phoneTb.Text }.FirstOrDefault(x => string.IsNullOrWhiteSpace(x)) != null)
+            {
+                MessageBox.Show("Заполните все данные!");
+                return;
+            }
             user.Name = nameTb.Text;
             user.Surname = surnameTb.Text;
             user.PhoneNumber = phoneTb.Text;

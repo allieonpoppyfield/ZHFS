@@ -51,14 +51,34 @@ namespace ZHFS
         private async Task InitCurrentProducts()
         {
             currentProductsGrid.DataSource = this.currentProducts;
+            var currentProductGridView = currentProductsGrid.MainView as GridView;
+            currentProductGridView.OptionsView.ShowGroupPanel = currentProductGridView.OptionsBehavior.Editable = false;
+            currentProductGridView.PopupMenuShowing += CurrentProductsGridViewPopupMenuShowing; ;
+        }
+
+        private void CurrentProductsGridViewPopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
+        {
+            if (e.MenuType == DevExpress.XtraGrid.Views.Grid.GridMenuType.Row)
+            {
+                DXMenuItem deleteProductItem = new DXMenuItem("Удалить товар из продажи");
+                deleteProductItem.Click += async (o, a) =>
+                {
+                    var s = (GridView)sender;
+                    var productId = (int)s.GetFocusedRowCellValue("productId");
+                    var remProduct = currentProducts.FirstOrDefault(x => x.productId == productId);
+                    currentProducts.Remove(remProduct);
+                    currentProductsGrid.RefreshDataSource();
+                };
+                e.Menu.Items.Add(deleteProductItem);
+            }
         }
 
         private void GridView1_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
         {
             if (e.MenuType == DevExpress.XtraGrid.Views.Grid.GridMenuType.Row)
             {
-                DXMenuItem editUSerItem = new DXMenuItem("Добавить товар в текущую продажу");
-                editUSerItem.Click += async (o, a) =>
+                DXMenuItem addProductItem = new DXMenuItem("Добавить товар в текущую продажу");
+                addProductItem.Click += async (o, a) =>
                 {
                     var s = (GridView)sender;
                     var productId = (int)s.GetFocusedRowCellValue("Id");
@@ -81,7 +101,7 @@ namespace ZHFS
                         currentProductsGrid.RefreshDataSource();
                     }
                 };
-                e.Menu.Items.Add(editUSerItem);
+                e.Menu.Items.Add(addProductItem);
             }
         }
 

@@ -132,7 +132,7 @@
             this.MaximumSize = new System.Drawing.Size(494, 207);
             this.MinimumSize = new System.Drawing.Size(494, 207);
             this.Name = "ClientForm";
-            this.Text = "ClientForm";
+            this.Text = "Редактирование информации о клиенте";
             ((System.ComponentModel.ISupportInitialize)(this.nameTb.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.surnameTb.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.phoneTb.Properties)).EndInit();

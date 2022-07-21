@@ -1,6 +1,6 @@
 ﻿namespace ZHFS
 {
-    partial class ProductForm
+    partial class DatePeriodForm
     {
         /// <summary>
         /// Required designer variable.
@@ -30,39 +30,30 @@
         {
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
-            this.nameTb = new DevExpress.XtraEditors.TextEdit();
             this.panelControl1 = new DevExpress.XtraEditors.PanelControl();
             this.simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
             this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
-            this.priceTb = new DevExpress.XtraEditors.TextEdit();
-            ((System.ComponentModel.ISupportInitialize)(this.nameTb.Properties)).BeginInit();
+            this.dtFrom = new System.Windows.Forms.DateTimePicker();
+            this.dtTo = new System.Windows.Forms.DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
             this.panelControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.priceTb.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // labelControl1
             // 
-            this.labelControl1.Location = new System.Drawing.Point(14, 13);
+            this.labelControl1.Location = new System.Drawing.Point(14, 14);
             this.labelControl1.Name = "labelControl1";
-            this.labelControl1.Size = new System.Drawing.Size(77, 13);
+            this.labelControl1.Size = new System.Drawing.Size(38, 13);
             this.labelControl1.TabIndex = 0;
-            this.labelControl1.Text = "Наименование:";
+            this.labelControl1.Text = "Дата с:";
             // 
             // labelControl2
             // 
-            this.labelControl2.Location = new System.Drawing.Point(12, 39);
+            this.labelControl2.Location = new System.Drawing.Point(12, 41);
             this.labelControl2.Name = "labelControl2";
-            this.labelControl2.Size = new System.Drawing.Size(30, 13);
+            this.labelControl2.Size = new System.Drawing.Size(45, 13);
             this.labelControl2.TabIndex = 1;
-            this.labelControl2.Text = "Цена:";
-            // 
-            // nameTb
-            // 
-            this.nameTb.Location = new System.Drawing.Point(123, 10);
-            this.nameTb.Name = "nameTb";
-            this.nameTb.Size = new System.Drawing.Size(323, 20);
-            this.nameTb.TabIndex = 3;
+            this.labelControl2.Text = "Дата по:";
             // 
             // panelControl1
             // 
@@ -81,7 +72,7 @@
             this.simpleButton2.Size = new System.Drawing.Size(75, 23);
             this.simpleButton2.TabIndex = 3;
             this.simpleButton2.Text = "Отмена";
-            this.simpleButton2.Click += new System.EventHandler(this.CloseBtnClick);
+            this.simpleButton2.Click += new System.EventHandler(this.simpleButton2_Click);
             // 
             // simpleButton1
             // 
@@ -90,34 +81,38 @@
             this.simpleButton1.Size = new System.Drawing.Size(75, 23);
             this.simpleButton1.TabIndex = 2;
             this.simpleButton1.Text = "Сохранить";
-            this.simpleButton1.Click += new System.EventHandler(this.SaveBtnClick);
+            this.simpleButton1.Click += new System.EventHandler(this.simpleButton1_Click);
             // 
-            // priceTb
+            // dtFrom
             // 
-            this.priceTb.Location = new System.Drawing.Point(123, 36);
-            this.priceTb.Name = "priceTb";
-            this.priceTb.Size = new System.Drawing.Size(323, 20);
-            this.priceTb.TabIndex = 4;
-            this.priceTb.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.priceTb_KeyPress);
+            this.dtFrom.Location = new System.Drawing.Point(101, 9);
+            this.dtFrom.Name = "dtFrom";
+            this.dtFrom.Size = new System.Drawing.Size(362, 23);
+            this.dtFrom.TabIndex = 7;
             // 
-            // ProductForm
+            // dtTo
+            // 
+            this.dtTo.Location = new System.Drawing.Point(101, 36);
+            this.dtTo.Name = "dtTo";
+            this.dtTo.Size = new System.Drawing.Size(362, 23);
+            this.dtTo.TabIndex = 8;
+            // 
+            // DatePeriodForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(478, 168);
+            this.Controls.Add(this.dtTo);
+            this.Controls.Add(this.dtFrom);
             this.Controls.Add(this.panelControl1);
-            this.Controls.Add(this.priceTb);
-            this.Controls.Add(this.nameTb);
             this.Controls.Add(this.labelControl2);
             this.Controls.Add(this.labelControl1);
             this.MaximumSize = new System.Drawing.Size(494, 207);
             this.MinimumSize = new System.Drawing.Size(494, 207);
-            this.Name = "ProductForm";
-            this.Text = "Добавление товара";
-            ((System.ComponentModel.ISupportInitialize)(this.nameTb.Properties)).EndInit();
+            this.Name = "DatePeriodForm";
+            this.Text = "Указание временного интервала для формирования отчета";
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
             this.panelControl1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.priceTb.Properties)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -127,10 +122,10 @@
 
         private DevExpress.XtraEditors.LabelControl labelControl1;
         private DevExpress.XtraEditors.LabelControl labelControl2;
-        private DevExpress.XtraEditors.TextEdit nameTb;
         private DevExpress.XtraEditors.PanelControl panelControl1;
         private DevExpress.XtraEditors.SimpleButton simpleButton2;
         private DevExpress.XtraEditors.SimpleButton simpleButton1;
-        private DevExpress.XtraEditors.TextEdit priceTb;
+        private DateTimePicker dtFrom;
+        private DateTimePicker dtTo;
     }
 }
